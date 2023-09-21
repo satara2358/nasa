@@ -45,7 +45,7 @@ export const Home = () => {
     <View style={styles.container}>
       <Header />
       <TodaysImage {...todaysImage} />
-      <LastImages {...lastFive}/>
+      <LastImages postImages={lastFive}/>
     </View>
   );
 };
