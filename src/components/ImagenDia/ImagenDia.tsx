@@ -1,52 +1,63 @@
-import React, { FC } from 'react'
-import { Button, Image, StyleSheet, Text, View } from 'react-native'
+import React, { FC } from "react";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
 
-import { PostImage } from '../../types'
+import { PostImage, RootStackParams } from "../../types";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const ImagenDia: FC<PostImage> = ({date, title, url}) => {
+
+type PostImageNavigationProps = NativeStackNavigationProp<
+  RootStackParams,
+  "Detail"
+>;
+
+const ImagenDia: FC<PostImage> = ({ date, title, url, explanation }) => {
+  const { navigate } = useNavigation<PostImageNavigationProps>();
+
+  const handleViewPress = () => {
+    navigate("Detail", { title, date, url, explanation });
+  };
+
   return (
     <View style={styles.container}>
-      <Image source={{uri: url}} style={styles.image}/>
-      <Text style={styles.title}>{title}</Text>    
+      <Image source={{ uri: url }} style={styles.image} />
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}> {date}</Text>
       <View style={styles.boton}>
-        <Button 
-          title='View'
-        />
+        <Button title="View" onPress={handleViewPress} />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  container : {
-    backgroundColor : '#2c449d',
-    marginVertical:16,
+  container: {
+    backgroundColor: "#2c449d",
+    marginVertical: 16,
     marginHorizontal: 24,
-    borderRadius  : 32,
+    borderRadius: 32,
     padding: 16,
   },
   image: {
-    width: '100%',
-    height:190,
-    borderWidth:2,
-    borderColor: '#fff',
+    width: "100%",
+    height: 190,
+    borderWidth: 2,
+    borderColor: "#fff",
     borderRadius: 32,
   },
-  title:{
-    color: '#fff',
+  title: {
+    color: "#fff",
     fontSize: 20,
     marginVertical: 12,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
-  date:{
-    color: '#fff',
-    fontSize:16,
+  date: {
+    color: "#fff",
+    fontSize: 16,
   },
-  boton:{
-    alignItems: 'flex-end',
-  }
+  boton: {
+    alignItems: "flex-end",
+  },
+});
 
-})
-
-export default ImagenDia
+export default ImagenDia;
